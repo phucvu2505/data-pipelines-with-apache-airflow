@@ -40,12 +40,12 @@ extract_gz = BashOperator(
 
 
 def _fetch_pageviews(pagenames):
-    result = dict.fromkeys(pagenames, 0)
+    result = dict.fromkeys(pagenames, 0) # initialize result for all pageviews with zero
     with open("/tmp/wikipageviews", "r") as f:
         for line in f:
             domain_code, page_title, view_counts, _ = line.split(" ")
             if domain_code == "en" and page_title in pagenames:
-                result[page_title] = view_counts
+                result[page_title] = view_counts # store pageview count
 
     print(result)
     # Prints e.g. "{'Facebook': '778', 'Apple': '20', 'Google': '451', 'Amazon': '9', 'Microsoft': '119'}"

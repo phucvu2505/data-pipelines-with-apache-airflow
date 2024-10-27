@@ -16,9 +16,18 @@ get_data = BashOperator(
         "{{ execution_date.year }}/"
         "{{ execution_date.year }}-{{ '{:02}'.format(execution_date.month) }}/"
         "pageviews-{{ execution_date.year }}"
-        "{{ '{:02}'.format(execution_date.month) }}"
+        "{{ '{:02}'.format(execution_date.month) }}" # The Wikipedia pageviews URL required zero-padded months, days, and hour (e.g: "07" for hour 7). within the Jinja-template string ww therefore apply string format for padding '{:02}'.format(execution_date.hour) 
         "{{ '{:02}'.format(execution_date.day) }}-"
         "{{ '{:02}'.format(execution_date.hour) }}0000.gz"
     ),
     dag=dag,
 )
+
+# #
+# the double curly braces tell Junja there's a variable or expression inside to evaluate
+# the value of execution_date is not know when progaming beacause the user will their execution_date in the form runtime
+# Airflow uses the Pendulum library for datetimes => execution_date is such as Pendulum datetime object
+# Trong Apache Airflow, Jinja templating được sử dụng để tạo ra các chuỗi động trong các tác vụ (tasks). 
+# Nó cho phép bạn chèn các giá trị động vào trong các tham số của DAG (Directed Acyclic Graph) hoặc task. 
+# Jinja giúp bạn làm cho các tác vụ linh hoạt hơn bằng cách sử dụng các biến, hàm và điều kiện.
+#
